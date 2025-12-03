@@ -1,41 +1,49 @@
-# 💰 Análisis de Rentabilidad por SKU y Categoría
+# 🚀 Consulting Express: Diagnóstico de Rentabilidad para Pymes
 
-Este repositorio contiene un informe detallado desarrollado en **Python** y **Jupyter Notebook** para analizar la rentabilidad de los productos de una empresa. El objetivo principal es desglosar la performance financiera a nivel de **Unidad de Mantenimiento de Stock (SKU)** y **Categoría de Producto** para identificar áreas de optimización.
-
----
-
-### 📂 Estructura del Repositorio
-
-| Archivo/Directorio | Descripción |
-| :--- | :--- |
-| `Informe para Rentabilidad.ipynb` | Es el archivo principal que contiene el código completo, la limpieza de datos, el análisis de rentabilidad y las visualizaciones. |
-| `.gitignore` | (Recomendado) Define los archivos y carpetas locales (como `.ipynb_checkpoints/`) que no deben subirse a Git. |
+> **¿Tu inventario te está haciendo perder dinero?**
+> Convierto tus datos de venta en decisiones estratégicas en menos de 24 horas.
 
 ---
 
-### 📊 Metodología del Análisis
+## 💼 ¿Qué es este servicio?
 
-El informe realiza las siguientes tareas de procesamiento y análisis:
-1.  **Cálculo de Márgenes:** Determinar el margen bruto y neto por SKU.
-2.  **Agregación de Resultados:** Consolidar la rentabilidad total por categoría de producto.
-3.  **Visualización:** Generación de gráficos (como diagramas de Pareto) para identificar el 20% de SKUs que generan el 80% del margen.
+Este repositorio aloja el motor de análisis de **Consulting Express**, una herramienta de auditoría financiera diseñada para dueños de negocios (Ferreterías, Farmacias, Retail) que necesitan saber **dónde está su ganancia real**.
 
----
-
-### 🛠️ Requisitos Técnicos
-
-Para visualizar y ejecutar este análisis de forma local, se requiere:
-
-* **Python 3.x**
-* **Jupyter Notebook** (o JupyterLab)
-
-**Librerías de Python requeridas:**
-* `pandas`
-* `numpy`
-* `matplotlib` o `seaborn`
+Utilizo algoritmos de ciencia de datos para segmentar tus productos y responder 3 preguntas clave:
+1.  **¿Qué productos son "Tóxicos"?** (Venden mucho pero pierden dinero).
+2.  **¿Cuáles son tus "Cash Cows"?** (Tu motor de flujo de caja).
+3.  **¿Qué productos deberías eliminar?** (Optimización de stock).
 
 ---
 
-### 🚀 Siguientes Pasos
+## 📸 Resultados Reales (Lo que recibirás)
 
-Te invito a clonar este repositorio y ejecutar el archivo `.ipynb` para explorar los datos en detalle.
+Al contratar el diagnóstico, recibirás un reporte visual como este, identificando tus puntos críticos:
+
+### 1. Matriz de Estrategia (Tu Inventario en una imagen)
+Visualiza de un vistazo dónde se ubican tus productos según su rentabilidad y volumen.
+
+![Matriz Estratégica](matriz_rentabilidad_cliente.png)
+
+### 2. Detección de Fugas de Dinero (Lista de Tóxicos)
+Identifico los productos exactos que requieren revisión inmediata de precios o costos.
+
+![Tabla de Riesgos](Tabla_Dilemas_Portfolio.png)
+
+---
+
+## 🛠️ ¿Cómo contratar el diagnóstico?
+
+No necesitas saber de tecnología. Solo sigue estos 3 pasos:
+
+1.  **Descarga la Plantilla Maestra:**
+    Haz clic aquí para bajar el archivo Excel vacío:
+    👉 [📥 Descargar Plantilla_Carga_ConsultingExpress.xlsx](Plantilla_Carga_ConsultingExpress.xlsx)
+
+2.  **Llénala con tu data:**
+    Solo necesito 4 columnas: SKU, Categoría, Venta Total y Costo Total.
+
+3.  **Envíamela:**
+    Manda el archivo a mi correo **[TU CORREO AQUÍ]** con el asunto "Solicitud de Diagnóstico".
+
+**⏱️ Tiempo de entrega:** 24 horas laborables.
