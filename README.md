@@ -44,6 +44,6 @@ No necesitas saber de tecnología. Solo sigue estos 3 pasos:
     Solo necesito 4 columnas: SKU, Categoría, Venta Total y Costo Total.
 
 3.  **Envíamela:**
-    Manda el archivo a mi correo **[paul.pololo@gmail.com]** con el asunto "Solicitud de Diagnóstico".
+    Manda el archivo a mi correo **[eunoiadigitalecuador@gmail.com]** con el asunto "Solicitud de Diagnóstico".
 
 **⏱️ Tiempo de entrega:** 24 horas laborables.
