@@ -9,7 +9,7 @@ from faker import Faker
 # --- 1. CONFIGURACIÓN DE LA PÁGINA ---
 st.set_page_config(
     page_title="Diagnóstico Eunoia Digital",
-    page_icon="📊",
+    page_icon="⭐",
     layout="wide"
 )
 
@@ -66,7 +66,7 @@ def generar_datos_simulados():
 
 # --- 3. BARRA LATERAL (LÓGICA HÍBRIDA) ---
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/270/270023.png", width=80)
+    st.image("https://raw.githubusercontent.com/PaulMoraM/eunoia-branding/main/eunoia-digital-logo.png", width=80)
     st.title("Eunoia Digital")
     st.markdown("---")
     
