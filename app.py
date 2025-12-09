@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Dec  9 09:44:28 2025
-
-@author: indu_analistanegocio
-"""
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -13,115 +6,180 @@ import matplotlib.pyplot as plt
 import random
 from faker import Faker
 
-# --- CONFIGURACIÓN DE LA PÁGINA ---
-st.set_page_config(page_title="Diagnóstico Eunoia Digital", layout="wide")
+# --- 1. CONFIGURACIÓN DE LA PÁGINA ---
+st.set_page_config(
+    page_title="Diagnóstico Eunoia Digital",
+    page_icon="📊",
+    layout="wide"
+)
 
-st.title("🚀 Informe de Optimización de Rentabilidad")
+# Estilos CSS para ocultar elementos innecesarios y dar estilo a los botones
 st.markdown("""
-**Introducción: ¿Dónde está el dinero?**
-Este análisis se enfoca en la rentabilidad de los productos de mayor impacto financiero para identificar oportunidades de maximización de ganancias.
-""")
+<style>
+    .reportview-container {
+        background: #f0f2f6
+    }
+    .big-font {
+        font-size:20px !important;
+        font-weight: bold;
+    }
+    .stButton>button {
+        background-color: #FF4B4B;
+        color: white;
+        border-radius: 10px;
+        height: 3em;
+        width: 100%;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-# --- GENERACIÓN DE DATOS (Con caché para que no cambie al interactuar) ---
+# --- 2. BARRA LATERAL (SIDEBAR) ---
+with st.sidebar:
+    st.image("https://cdn-icons-png.flaticon.com/512/270/270023.png", width=100) # Icono genérico de gráfico
+    st.title("Eunoia Digital")
+    st.markdown("---")
+    st.write("**Simulador de Rentabilidad**")
+    st.info("""
+    Esta herramienta demuestra cómo nuestro algoritmo clasifica miles de productos en segundos.
+    
+    Los datos mostrados aquí son **simulados** para fines demostrativos.
+    """)
+    st.markdown("---")
+    st.write("¿Quieres este análisis con tus datos reales?")
+    st.markdown("[**Contactar por WhatsApp**](https://wa.me/593995888197?text=Hola%20Paul,%20vi%20la%20demo%20y%20quiero%20analizar%20mi%20negocio)")
+
+# --- 3. GENERACIÓN DE DATOS (Faker) ---
 @st.cache_data
-def generar_datos():
+def generar_datos_simulados():
     fake = Faker('es_ES')
     UMBRAL_CANTIDAD = 100
-    num_registros = 500
-    categorias = ['ACCESORIOS DE VIAJE', 'ROPA DEPORTIVA TÉCNICA', 'EQUIPAMIENTO OUTDOOR']
+    num_registros = 600 # Aumentamos un poco para volumen
+    categorias = ['ACCESORIOS DE VIAJE', 'ROPA DEPORTIVA TÉCNICA', 'EQUIPAMIENTO OUTDOOR', 'CALZADO ESCOLAR']
     
     datos = []
     for i in range(num_registros):
-        margen_base = random.uniform(0.1, 0.4)
-        cantidad = random.randint(UMBRAL_CANTIDAD, 3000)
-        precio_venta_promedio = round(random.uniform(20, 150), 2)
-        dolares_total = round(cantidad * precio_venta_promedio * random.uniform(0.95, 1.05), 2)
+        margen_base = random.uniform(0.05, 0.45) # Variabilidad de margen
+        cantidad = random.randint(50, 3500)
+        precio_venta_promedio = round(random.uniform(15, 120), 2)
+        dolares_total = round(cantidad * precio_venta_promedio, 2)
         costo_total = round(dolares_total * (1 - margen_base), 2)
-        sku_modelo = f"{random.randint(100, 999)}{random.choice('ABCD')}"
+        sku_modelo = f"SKU-{random.randint(1000, 9999)}-{random.choice(['A','B','C'])}"
         
         dato = {
-            'Cantidad': cantidad,
-            'Dolares': dolares_total,
-            'Costo': costo_total,
-            'Categoria': random.choice(categorias),
             'SKU': sku_modelo,
-            'Precio_Venta': round(dolares_total / cantidad, 2)
+            'Categoria': random.choice(categorias),
+            'Ventas ($)': dolares_total,
+            'Costo ($)': costo_total,
+            'Unidades': cantidad,
+            'Margen ($)': dolares_total - costo_total
         }
         datos.append(dato)
     
     df = pd.DataFrame(datos)
-    
-    # Cálculos
-    df['Margen'] = df['Dolares'] - df['Costo']
-    df['MargenPorcentual'] = (df['Margen'] / df['Dolares'].replace(0, np.nan)) * 100
-    
+    # Calcular Margen %
+    df['Margen %'] = (df['Margen ($)'] / df['Ventas ($)']) * 100
     return df
 
-# Cargar datos
-df_alto_volumen = generar_datos()
+# Cargar la data
+df = generar_datos_simulados()
 
-# --- MOSTRAR DATASET INICIAL ---
-st.subheader("Dataset Generado (Muestra)")
-st.dataframe(df_alto_volumen.head())
+# --- 4. CUERPO PRINCIPAL DEL INFORME ---
 
-# --- RESUMEN POR CATEGORÍA ---
-st.subheader("1. Resumen de Rentabilidad por Categoría")
-resumen_categoria = df_alto_volumen.groupby('Categoria').agg(
-    Ventas_Totales=('Dolares', 'sum'),
-    Margen_Total=('Margen', 'sum'),
-    Margen_Promedio=('MargenPorcentual', 'mean')
-).sort_values('Margen_Promedio', ascending=True)
+st.title("🚀 Auditoría de Rentabilidad de Inventarios")
+st.markdown("### Diagnóstico de Salud Financiera del Portafolio")
+st.write("A continuación visualizamos cómo se distribuye el capital de una empresa típica del sector Retail.")
 
-st.dataframe(resumen_categoria)
+# Métricas Globales (KPIs)
+col1, col2, col3 = st.columns(3)
+col1.metric("Ventas Totales Analizadas", f"${df['Ventas ($)'].sum():,.0f}")
+col2.metric("Margen Total Capturado", f"${df['Margen ($)'].sum():,.0f}")
+col3.metric("SKUs (Productos) Evaluados", f"{df.shape[0]}")
 
-# --- MATRIZ BCG (GRÁFICO) ---
-st.subheader("2. Matriz de Impacto: Margen vs. Ventas")
+st.markdown("---")
 
-# Cálculos para el gráfico
-mediana_dolares = df_alto_volumen['Dolares'].median()
-mediana_margen_abs = df_alto_volumen['Margen'].median()
-UMBRAL_MARGEN = 15.0
-toxicos_criticos = df_alto_volumen[df_alto_volumen['MargenPorcentual'] < UMBRAL_MARGEN]
-top_5_toxicos = toxicos_criticos.sort_values('MargenPorcentual', ascending=True).head(5)
+# --- 5. LÓGICA DE NEGOCIO (Clasificación BCG) ---
+mediana_ventas = df['Ventas ($)'].median()
+mediana_margen = df['Margen ($)'].median()
 
-# Crear figura explícita para Streamlit
-fig, ax = plt.subplots(figsize=(12, 8))
+# Clasificación
+def clasificar_bcg(row):
+    if row['Margen ($)'] >= mediana_margen and row['Ventas ($)'] >= mediana_ventas:
+        return "ESTRELLA (Ganancia y Volumen)"
+    elif row['Margen ($)'] < mediana_margen and row['Ventas ($)'] >= mediana_ventas:
+        return "DILEMA (Alto Volumen / Bajo Margen)"
+    elif row['Margen ($)'] < mediana_margen and row['Ventas ($)'] < mediana_ventas:
+        return "PERRO (Bajo Volumen / Bajo Margen)"
+    else:
+        return "NICHO (Alto Margen / Bajo Volumen)"
 
+df['Clasificación'] = df.apply(clasificar_bcg, axis=1)
+
+# Contar cuántos hay de cada uno
+resumen_clasificacion = df['Clasificación'].value_counts()
+
+# --- 6. VISUALIZACIÓN DE IMPACTO (El Gancho) ---
+st.subheader("1. Matriz de Impacto: ¿Dónde está atrapado su dinero?")
+st.markdown("Cada punto representa un producto. Los colores indican su salud financiera.")
+
+fig, ax = plt.subplots(figsize=(10, 6))
 sns.scatterplot(
-    data=df_alto_volumen,
-    x='Margen',
-    y='Dolares',
-    size='Cantidad',
-    hue='Categoria',
-    sizes=(50, 500), # Ajusté un poco el tamaño para web
-    alpha=0.7,
-    palette='viridis',
+    data=df, 
+    x='Margen ($)', 
+    y='Ventas ($)', 
+    hue='Clasificación',
+    size='Unidades',
+    sizes=(20, 200),
+    palette={'ESTRELLA (Ganancia y Volumen)': 'green', 
+             'DILEMA (Alto Volumen / Bajo Margen)': 'orange',
+             'PERRO (Bajo Volumen / Bajo Margen)': 'red',
+             'NICHO (Alto Margen / Bajo Volumen)': 'blue'},
+    alpha=0.6,
     ax=ax
 )
+# Líneas de corte
+ax.axvline(mediana_margen, color='grey', linestyle='--')
+ax.axhline(mediana_ventas, color='grey', linestyle='--')
+ax.set_title("Mapa de Calor de Rentabilidad (BCG Proxy)", fontsize=12)
+st.pyplot(fig)
 
-# Líneas y Textos
-ax.axvline(mediana_margen_abs, color='k', linestyle='--', linewidth=2)
-ax.axhline(mediana_dolares, color='k', linestyle='--', linewidth=2)
+st.success(f"✅ El algoritmo ha detectado **{resumen_clasificacion.get('ESTRELLA (Ganancia y Volumen)', 0)} productos Estrella** que sostienen el negocio.")
+st.error(f"⚠️ **ALERTA CRÍTICA:** Se han detectado **{resumen_clasificacion.get('PERRO (Bajo Volumen / Bajo Margen)', 0) + resumen_clasificacion.get('DILEMA (Alto Volumen / Bajo Margen)', 0)} Productos Tóxicos** (Categorías Perro y Dilema) que están consumiendo flujo de caja.")
 
-# Etiquetas cuadrantes (Simplificadas para visualización limpia)
-ax.text(mediana_margen_abs * 1.1, mediana_dolares * 1.1, 'ESTRELLA (Ganancia)', color='green', weight='bold')
-ax.text(mediana_margen_abs * 0.9, mediana_dolares * 1.1, 'DILEMA (Volumen sin Margen)', color='orange', weight='bold', ha='right')
-ax.text(mediana_margen_abs * 0.9, mediana_dolares * 0.9, 'PERRO (Revisar)', color='red', weight='bold', ha='right')
-ax.text(mediana_margen_abs * 1.1, mediana_dolares * 0.9, 'NICHO (Potencial)', color='blue', weight='bold')
+st.markdown("---")
 
-# Anotaciones de tóxicos
-for index, row in top_5_toxicos.iterrows():
-    ax.annotate(row['SKU'], (row['Margen'], row['Dolares']), color='red', weight='bold', fontsize=8)
+# --- 7. EL "PAYWALL" ESTRATÉGICO (Cierre de Venta) ---
+st.subheader("2. Detalle de Acciones Sugeridas")
 
-st.pyplot(fig) # Comando CLAVE para mostrar el gráfico en web
+col_left, col_right = st.columns([2, 1])
 
-# --- SEGMENTACIÓN Y DESCARGAS ---
-st.subheader("3. Detalle de Oportunidades (Nichos)")
-st.write("SKUs con Alto Margen pero Baja Venta:")
+with col_left:
+    st.write("En una Auditoría completa, usted recibiría el listado exacto de estos productos con acciones recomendadas:")
+    
+    # Tabla "Falsa" o borrosa (Solo mostramos estructura, no datos reales valiosos)
+    st.markdown("**Vista previa del formato de entrega (Datos Ocultos por Seguridad):**")
+    
+    # Creamos un dataframe de ejemplo con datos censurados
+    df_preview = df[df['Clasificación'].str.contains("DILEMA")].head(5).copy()
+    df_preview['SKU'] = "🔒 BLOQUEADO"
+    df_preview['Acción Recomendada'] = "🔒 REQUIE CONSULTORÍA"
+    df_preview = df_preview[['Categoria', 'SKU', 'Ventas ($)', 'Margen %', 'Acción Recomendada']]
+    
+    st.table(df_preview)
 
-nichos = df_alto_volumen[
-    (df_alto_volumen['Margen'] >= mediana_margen_abs) & 
-    (df_alto_volumen['Dolares'] < mediana_dolares)
-].sort_values('Margen', ascending=False)
+with col_right:
+    st.warning("🔓 **Desbloqueo de Información**")
+    st.write("¿Quiere saber exactamente cuáles son sus productos tóxicos y cómo corregir el precio?")
+    
+    st.markdown("### Su diagnóstico incluye:")
+    st.markdown("""
+    - 📋 Lista detallada de SKUs a liquidar.
+    - 💲 Estrategia de precios nuevos.
+    - 📉 Proyección de recuperación de caja.
+    """)
+    
+    # BOTÓN DE LLAMADA A LA ACCIÓN (CTA)
+    url_whatsapp = "https://wa.me/593995888197?text=Hola%20Paul,%20quiero%20agendar%20mi%20Diagnóstico%20Express%20de%2048%20horas."
+    st.markdown(f'<a href="{url_whatsapp}" target="_blank"><button>SOLICITAR AUDITORÍA AHORA</button></a>', unsafe_allow_html=True)
 
-st.dataframe(nichos.head(10))
+st.markdown("---")
+st.caption("© 2025 Eunoia Digital Ecuador - Soluciones de Inteligencia de Negocios")
