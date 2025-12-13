@@ -214,7 +214,7 @@ with col_right:
     3. Recupere flujo de caja en 30 días.
     """)
     
-    url_whatsapp = "https://wa.me/593995888197?text=Hola%20Paul,%20ya%20vi%20el%20diagnóstico%20y%20quiero%20el%20plan%20de%20acción%20para%20mis%20productos."
+    url_whatsapp = "https://wa.me/593983959867?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20el%20Diagn%C3%B3stico%20Express"
     st.markdown(f'<a href="{url_whatsapp}" target="_blank"><button>SOLICITAR SOLUCIÓN AHORA</button></a>', unsafe_allow_html=True)
 
 st.markdown("---")
