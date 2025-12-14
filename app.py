@@ -221,6 +221,6 @@ with c_left:
 
 with c_right:
     st.info("🔓 **Obtener Reporte Completo**")
-    st.markdown(f'<a href="https://wa.me/593995888197" target="_blank" class="cta-button">SOLICITAR AUDITORÍA</a>', unsafe_allow_html=True)
+    st.markdown(f'<a href="https://wa.me/593983959867?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20el%20Diagn%C3%B3stico%20Express', unsafe_allow_html=True)
 
 st.caption("© 2025 Eunoia Digital Ecuador")
