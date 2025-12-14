@@ -216,9 +216,18 @@ c_left, c_right = st.columns([2, 1])
 
 with c_left:
     st.write("Muestra de productos críticos (Ocultos):")
+    # Filtramos y copiamos para evitar warning de pandas
     ver = df[df['Clasificación'].str.contains("PERRO|DILEMA")].head(5).copy()
     ver['SKU'] = ver['SKU'].apply(lambda x: f"{str(x)[:6]}...🔒")
     st.table(ver[['Categoria', 'SKU', 'Margen %']])
 
 with c_right:
-    st.info("🔓 **Obtener Reporte Comple
+    st.info("🔓 **Obtener Reporte Completo**")
+    # AQUÍ ESTABA EL ERROR: Se ha corregido el cierre de comillas y el HTML
+    st.markdown("""
+        <a href="https://wa.me/593983959867?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20el%20Diagn%C3%B3stico%20Express" class="cta-button" target="_blank">
+            👉 Solicitar Diagnóstico
+        </a>
+    """, unsafe_allow_html=True)
+
+st.caption("© 2025 Eunoia Digital Ecuador")
