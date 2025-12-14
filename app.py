@@ -163,7 +163,8 @@ with st.sidebar:
         df = generar_datos_simulados()
     
     st.markdown("---")
-    st.markdown("💬 [WhatsApp Directo](https://wa.me/593995888197)")
+    # CORRECCIÓN 1: Enlace en la barra lateral con el nuevo número y mensaje
+    st.markdown("💬 [WhatsApp Directo](https://wa.me/593983959867?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20el%20Diagn%C3%B3stico%20Express)")
 
 # --- 6. CUERPO PRINCIPAL ---
 try:
@@ -220,7 +221,4 @@ with c_left:
     st.table(ver[['Categoria', 'SKU', 'Margen %']])
 
 with c_right:
-    st.info("🔓 **Obtener Reporte Completo**")
-    st.markdown(f'<a href="https://wa.me/593983959867?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20el%20Diagn%C3%B3stico%20Express', unsafe_allow_html=True)
-
-st.caption("© 2025 Eunoia Digital Ecuador")
+    st.info("🔓 **Obtener Reporte Comple
