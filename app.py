@@ -117,14 +117,27 @@ def generar_datos_simulados():
     df['Margen %'] = (df['Margen ($)'] / df['Ventas ($)']) * 100
     return df
 
-# --- 4. BARRA LATERAL (BRANDING ACTUALIZADO) ---
+# --- BARRA LATERAL (BRANDING ACTUALIZADO) ---
 with st.sidebar:
-    # Intento de cargar logo local, sino usa URL
-    try:
-        st.image("logo_eunoia.png", use_container_width=True)
-    except:
-        # Fallback si no tienes el archivo local aún
-        st.image("https://raw.githubusercontent.com/PaulMoraM/eunoia-branding/main/eunoia-digital-logo.png", width=200)
+    # --- SOLUCIÓN LOGO CON FONDO BLANCO ---
+    # Inyectamos un contenedor HTML blanco para que el logo resalte.
+    # Usamos la URL directa de tu repo de branding.
+    st.markdown(f"""
+        <div style="
+            background-color: #ffffff; /* El fondo blanco sólido */
+            padding: 12px;             /* Un poco de 'aire' alrededor del logo */
+            border-radius: 10px;       /* Bordes redondeados modernos */
+            margin-bottom: 20px;       /* Separación con la línea de abajo */
+            text-align: center;        /* Asegura que esté centrado */
+            box-shadow: 0 4px 6px rgba(255,255,255,0.1); /* Sutil brillo blanco */
+        ">
+            <img src="{URL_LOGO}" style="width: 100%; height: auto; display: block;">
+        </div>
+    """, unsafe_allow_html=True)
+    # --------------------------------------
+
+    st.markdown("---")
+    # ... resto de tu código del sidebar ...        st.image("https://raw.githubusercontent.com/PaulMoraM/eunoia-branding/main/eunoia-digital-logo.png", width=200)
     
     st.markdown("---")
     st.header("⚙️ Configuración")
